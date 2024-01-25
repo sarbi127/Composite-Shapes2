@@ -19,7 +19,7 @@ bool CApp::OnInit()
 	int xSize = 1280;
 	int ySize = 720;	
 	
-	pWindow = SDL_CreateWindow("UV Projection", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, xSize, ySize, SDL_WINDOW_SHOWN);
+	pWindow = SDL_CreateWindow("Composite Shape", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, xSize, ySize, SDL_WINDOW_SHOWN);
 	
 	if (pWindow != NULL)
 	{

@@ -54,10 +54,10 @@ qbRT::Scene::Scene()
 	// Create the textures.
 	// **************************************************************************************	
 	auto Texture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
-	Texture -> LoadImage("C:/git/pic-bmp/7593526.bmp");
-	Texture -> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
-																0.0,
-																qbVector<double>{std::vector<double>{1.0, 1.0}} );
+	Texture -> LoadImage("C:/git/pic-bmp/15.bmp");
+	Texture -> SetTransform(qbVector<double>{std::vector<double>{0.0, 0.0}},
+							0.0,
+							qbVector<double>{std::vector<double>{1.0, 1.0}} );
 
 	auto sphereTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
 	sphereTexture -> LoadImage("C:/git/pic-bmp/BasketballColor.bmp");
@@ -229,30 +229,38 @@ qbRT::Scene::Scene()
 	//double sprayY = -1.5;	
 	double sprayX = 0.0;
 	double sprayY = 0.0;
-	auto penBody = std::make_shared<qbRT::Cylinder> (qbRT::Cylinder());
+	/*auto penBody = std::make_shared<qbRT::Cylinder> (qbRT::Cylinder());
 	penBody -> m_tag = "penBody";
 	penBody -> m_isVisible = true;
 	penBody -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -0.5}},
 												qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
 												qbVector<double>{std::vector<double>{0.1, 0.1, 1.0}}});
 	penBody -> AssignMaterial(BodyMat);
-	penBody -> m_uvMapType = qbRT::uvCYLINDER;
+	penBody -> m_uvMapType = qbRT::uvCYLINDER;*/
+
+	auto snowManBody = std::make_shared<qbRT::ObjSphere> (qbRT::ObjSphere());
+	snowManBody -> m_tag = "snowManBody";
+	snowManBody -> m_isVisible = true;
+	snowManBody -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -0.1}},
+												qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
+												qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}}});
+	snowManBody -> AssignMaterial(BodyMat);
 	
-	auto penTopCone = std::make_shared<qbRT::Cone> (qbRT::Cone());
+	/*auto penTopCone = std::make_shared<qbRT::Cone> (qbRT::Cone());
 	penTopCone -> m_tag = "penTopCone";
 	penTopCone -> m_isVisible = true;
 	penTopCone -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -2.0}},
 												   qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 												   qbVector<double>{std::vector<double>{0.03, 0.03, 0.11}}});
-	penTopCone -> AssignMaterial(metalMat);
+	penTopCone -> AssignMaterial(metalMat);*/
 	
-	auto penTop = std::make_shared<qbRT::Cone> (*penTopCone);
-	penTop -> m_tag = "penTop";
-	penTop -> m_isVisible = true;
-	penTop -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -2.0}},
+	auto snowManTop = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManTop -> m_tag = "snowManTop";
+	snowManTop -> m_isVisible = true;
+	snowManTop -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -1.3}},
 											   qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											   qbVector<double>{std::vector<double>{0.1, 0.1, 0.5}}});
-	penTop -> AssignMaterial(plasticMat);
+											   qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}}});
+	snowManTop -> AssignMaterial(BodyMat);
 
 	/*double sprayX = 0.0;
 	double sprayY = 0.0;
@@ -281,17 +289,17 @@ qbRT::Scene::Scene()
 																								qbVector<double>{std::vector<double>{0.2, 0.2, 0.5}}}	);
 	sprayTop -> AssignMaterial(plasticMat);*/
 
-	auto pen = std::make_shared<qbRT::SHAPES::CompositeBase> (qbRT::SHAPES::CompositeBase());
-	pen -> m_tag = "pen";
-	pen -> m_isVisible = true;
+	auto snowman = std::make_shared<qbRT::SHAPES::CompositeBase> (qbRT::SHAPES::CompositeBase());
+	snowman -> m_tag = "snowman";
+	snowman -> m_isVisible = true;
 	//pen -> AddSubShape(sprayBody);
 	//pen -> AddSubShape(sprayTopCone);
 	//pen -> AddSubShape(sprayTop);
-	pen -> AddSubShape(penBody);
-	pen -> AddSubShape(penTopCone);
-	pen -> AddSubShape(penTop);
-	pen -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.0, -1.75, 0.0}},
-	                                       qbVector<double>{std::vector<double>{0.0, -M_PI/4.0, 0.0}},
+	snowman -> AddSubShape(snowManBody);
+	//pen -> AddSubShape(penTopCone);
+	snowman -> AddSubShape(snowManTop);
+	snowman -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.0, -1.75, 0.0}},
+	                                       qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
 										   qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}});
 
 	//penBody -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -0.5}},
@@ -340,15 +348,15 @@ qbRT::Scene::Scene()
 	//m_objectList.push_back(penBody);
 	//m_objectList.push_back(penTopCone);
 	//m_objectList.push_back(penTop);
-	m_objectList.push_back(pen);
-	m_objectList.push_back(box);
-	m_objectList.push_back(box2);	
-	m_objectList.push_back(box3);
-	m_objectList.push_back(ball);
+	m_objectList.push_back(snowman);
+	//m_objectList.push_back(box);
+	//m_objectList.push_back(box2);	
+	//m_objectList.push_back(box3);
+	//m_objectList.push_back(ball);
 	m_objectList.push_back(floor);
 	m_objectList.push_back(backWall);
 	m_objectList.push_back(sideWall);
-	m_objectList.push_back(donut);
+	//m_objectList.push_back(donut);
 	
 	// **************************************************************************************	
 	// Construct and setup the lights.
