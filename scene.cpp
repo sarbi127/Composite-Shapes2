@@ -54,7 +54,7 @@ qbRT::Scene::Scene()
 	// Create the textures.
 	// **************************************************************************************	
 	auto Texture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
-	Texture -> LoadImage("C:/git/pic-bmp/15.bmp");
+	Texture -> LoadImage("C:/git/pic-bmp/angele-kamp-g8IEMx8p_z8-unsplash.bmp");
 	Texture -> SetTransform(qbVector<double>{std::vector<double>{0.0, 0.0}},
 							0.0,
 							qbVector<double>{std::vector<double>{1.0, 1.0}} );
@@ -146,8 +146,13 @@ qbRT::Scene::Scene()
 	auto BodyMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
 	BodyMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
 	BodyMat -> m_reflectivity = 0.1;
-	BodyMat -> m_shininess = 16.0;;
+	BodyMat -> m_shininess = 16.0;
 	BodyMat -> AssignTexture(Texture);
+
+	auto EyeMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
+	EyeMat -> m_baseColor = qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}};
+	EyeMat -> m_reflectivity = 0.1;
+	EyeMat -> m_shininess = 16.0;
 
 	auto sphereBodyMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
 	sphereBodyMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
@@ -242,8 +247,8 @@ qbRT::Scene::Scene()
 	snowManBody -> m_tag = "snowManBody";
 	snowManBody -> m_isVisible = true;
 	snowManBody -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -0.1}},
-												qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
-												qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}}});
+												    qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
+												    qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}}});
 	snowManBody -> AssignMaterial(BodyMat);
 	
 	/*auto penTopCone = std::make_shared<qbRT::Cone> (qbRT::Cone());
@@ -257,10 +262,42 @@ qbRT::Scene::Scene()
 	auto snowManTop = std::make_shared<qbRT::ObjSphere> (*snowManBody);
 	snowManTop -> m_tag = "snowManTop";
 	snowManTop -> m_isVisible = true;
-	snowManTop -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -1.3}},
-											   qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											   qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}}});
+	snowManTop -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{sprayX, sprayY, -1.2}},
+											       qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											       qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}}});
 	snowManTop -> AssignMaterial(BodyMat);
+
+	auto snowManEye1 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManEye1 -> m_tag = "snowManEye1";
+	snowManEye1 -> m_isVisible = true;
+	snowManEye1 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{0.2, -0.5, -1.5}},
+											        qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											        qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
+	snowManEye1 -> AssignMaterial(EyeMat);
+
+	auto snowManEye2 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManEye2 -> m_tag = "snowManEye2";
+	snowManEye2 -> m_isVisible = true;
+	snowManEye2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.2, -0.5, -1.5}},
+											        qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											        qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
+	snowManEye2 -> AssignMaterial(EyeMat);
+
+	auto snowManbutton1 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManbutton1 -> m_tag = "snowManbutton1";
+	snowManbutton1 -> m_isVisible = true;
+	snowManbutton1 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.3, -4.0, -1.5}},
+											           qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											           qbVector<double>{std::vector<double>{0.1, 0.1, 0.1}}});
+	snowManbutton1 -> AssignMaterial(EyeMat);
+
+	auto snowManbutton2 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManbutton2 -> m_tag = "snowManbutton2";
+	snowManbutton2 -> m_isVisible = true;
+	snowManbutton2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.2, -3.0, -1.5}},
+											           qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											           qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
+	snowManbutton2 -> AssignMaterial(EyeMat);
 
 	/*double sprayX = 0.0;
 	double sprayY = 0.0;
@@ -296,6 +333,10 @@ qbRT::Scene::Scene()
 	//pen -> AddSubShape(sprayTopCone);
 	//pen -> AddSubShape(sprayTop);
 	snowman -> AddSubShape(snowManBody);
+	snowman -> AddSubShape(snowManEye1);
+	snowman -> AddSubShape(snowManEye2);
+	snowman -> AddSubShape(snowManbutton1);
+	snowman -> AddSubShape(snowManbutton2);
 	//pen -> AddSubShape(penTopCone);
 	snowman -> AddSubShape(snowManTop);
 	snowman -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.0, -1.75, 0.0}},
@@ -362,14 +403,14 @@ qbRT::Scene::Scene()
 	// Construct and setup the lights.
 	// **************************************************************************************	
 	auto leftLight = std::make_shared<qbRT::PointLight> (qbRT::PointLight());
-	leftLight -> m_location = qbVector<double> {std::vector<double> {0.0, -20.0, -20.0}};
+	leftLight -> m_location = qbVector<double> {std::vector<double> {0.0, -30.0, -20.0}};
 	leftLight -> m_color = qbVector<double> {std::vector<double> {1.0, 1.0, 1.0}};
-	leftLight -> m_intensity = 4.0;
+	leftLight -> m_intensity = 1.0;
 	
 	auto rightLight = std::make_shared<qbRT::PointLight> (qbRT::PointLight());
-	rightLight -> m_location = qbVector<double> {std::vector<double> {8.0, -20.0, -20.0}};
+	rightLight -> m_location = qbVector<double> {std::vector<double> {8.0, -30.0, -20.0}};
 	rightLight -> m_color = qbVector<double> {std::vector<double> {1.0, 1.0, 1.0}};
-	rightLight -> m_intensity = 6.0;
+	rightLight -> m_intensity = 1.0;
 	
 	auto topLight = std::make_shared<qbRT::PointLight> (qbRT::PointLight());
 	topLight -> m_location = qbVector<double> {std::vector<double> {0.0, 3.0, -20.0}};
