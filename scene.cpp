@@ -149,10 +149,20 @@ qbRT::Scene::Scene()
 	BodyMat -> m_shininess = 16.0;
 	BodyMat -> AssignTexture(Texture);
 
-	auto EyeMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
-	EyeMat -> m_baseColor = qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}};
-	EyeMat -> m_reflectivity = 0.1;
-	EyeMat -> m_shininess = 16.0;
+	auto eyeMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
+	eyeMat -> m_baseColor = qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}};
+	eyeMat -> m_reflectivity = 0.1;
+	eyeMat -> m_shininess = 16.0;
+
+	auto noseMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
+	noseMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 0.5, 0.0}};
+	noseMat -> m_reflectivity = 0.1;
+	noseMat -> m_shininess = 16.0;
+
+	auto buttonMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
+	buttonMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 0.0, 0.0}};
+	buttonMat -> m_reflectivity = 0.1;
+	buttonMat -> m_shininess = 16.0;
 
 	auto sphereBodyMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
 	sphereBodyMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
@@ -272,24 +282,40 @@ qbRT::Scene::Scene()
 	snowManEye1 -> m_isVisible = true;
 	snowManEye1 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{0.2, -0.5, -1.5}},
 											        qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											        qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
-	snowManEye1 -> AssignMaterial(EyeMat);
+											        qbVector<double>{std::vector<double>{0.07, 0.07, 0.07}}});
+	snowManEye1 -> AssignMaterial(eyeMat);
 
 	auto snowManEye2 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
 	snowManEye2 -> m_tag = "snowManEye2";
 	snowManEye2 -> m_isVisible = true;
 	snowManEye2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.2, -0.5, -1.5}},
 											        qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											        qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
-	snowManEye2 -> AssignMaterial(EyeMat);
+											        qbVector<double>{std::vector<double>{0.07, 0.07, 0.07}}});
+	snowManEye2 -> AssignMaterial(eyeMat);
+	
+	/*auto snowManNose = std::make_shared<qbRT::Cone> (qbRT::Cone());
+	snowManNose -> m_tag = "snowManNose";
+	snowManNose -> m_isVisible = true;
+	snowManNose -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{0.0, -0.5, -1.3}},
+											        qbVector<double>{std::vector<double>{M_PI/2.0, M_PI, 0.0}},
+											        qbVector<double>{std::vector<double>{0.05, 0.05, 0.05}}});
+	snowManNose -> AssignMaterial(noseMat);*/
+
+	auto snowManNose = std::make_shared<qbRT::ObjSphere> (*snowManBody);
+	snowManNose -> m_tag = "snowManNose";
+	snowManNose -> m_isVisible = true;
+	snowManNose -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{0.0, -0.5, -1.3}},
+											        qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+											        qbVector<double>{std::vector<double>{0.07, 0.07, 0.07}}});
+	snowManNose -> AssignMaterial(noseMat);
 
 	auto snowManbutton1 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
 	snowManbutton1 -> m_tag = "snowManbutton1";
 	snowManbutton1 -> m_isVisible = true;
 	snowManbutton1 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.3, -4.0, -1.5}},
 											           qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											           qbVector<double>{std::vector<double>{0.1, 0.1, 0.1}}});
-	snowManbutton1 -> AssignMaterial(EyeMat);
+											           qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
+	snowManbutton1 -> AssignMaterial(buttonMat);
 
 	auto snowManbutton2 = std::make_shared<qbRT::ObjSphere> (*snowManBody);
 	snowManbutton2 -> m_tag = "snowManbutton2";
@@ -297,7 +323,7 @@ qbRT::Scene::Scene()
 	snowManbutton2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.2, -3.0, -1.5}},
 											           qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 											           qbVector<double>{std::vector<double>{0.09, 0.09, 0.09}}});
-	snowManbutton2 -> AssignMaterial(EyeMat);
+	snowManbutton2 -> AssignMaterial(buttonMat);
 
 	/*double sprayX = 0.0;
 	double sprayY = 0.0;
@@ -337,6 +363,7 @@ qbRT::Scene::Scene()
 	snowman -> AddSubShape(snowManEye2);
 	snowman -> AddSubShape(snowManbutton1);
 	snowman -> AddSubShape(snowManbutton2);
+	snowman -> AddSubShape(snowManNose);
 	//pen -> AddSubShape(penTopCone);
 	snowman -> AddSubShape(snowManTop);
 	snowman -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.0, -1.75, 0.0}},
@@ -403,12 +430,12 @@ qbRT::Scene::Scene()
 	// Construct and setup the lights.
 	// **************************************************************************************	
 	auto leftLight = std::make_shared<qbRT::PointLight> (qbRT::PointLight());
-	leftLight -> m_location = qbVector<double> {std::vector<double> {0.0, -30.0, -20.0}};
+	leftLight -> m_location = qbVector<double> {std::vector<double> {0.0, -40.0, -20.0}};
 	leftLight -> m_color = qbVector<double> {std::vector<double> {1.0, 1.0, 1.0}};
 	leftLight -> m_intensity = 1.0;
 	
 	auto rightLight = std::make_shared<qbRT::PointLight> (qbRT::PointLight());
-	rightLight -> m_location = qbVector<double> {std::vector<double> {8.0, -30.0, -20.0}};
+	rightLight -> m_location = qbVector<double> {std::vector<double> {8.0, -40.0, -20.0}};
 	rightLight -> m_color = qbVector<double> {std::vector<double> {1.0, 1.0, 1.0}};
 	rightLight -> m_intensity = 1.0;
 	
