@@ -84,7 +84,7 @@ qbRT::Scene::Scene()
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
 
 	auto buttonTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
-	buttonTexture -> LoadImage("C:/git/pic-bmp/grunge-background-texture.bmp");
+	buttonTexture -> LoadImage("C:/git/pic-bmp/6328060.bmp");
 	buttonTexture-> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
 																0.0,
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
@@ -92,6 +92,12 @@ qbRT::Scene::Scene()
 	auto torusTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
 	torusTexture -> LoadImage("C:/git/pic-bmp/4231186.bmp");
 	torusTexture -> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
+																0.0,
+																qbVector<double>{std::vector<double>{1.0, 1.0}} );
+
+	auto hatTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
+	hatTexture -> LoadImage("C:/git/pic-bmp/6328060.bmp");
+	hatTexture -> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
 																0.0,
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
 						
@@ -186,25 +192,25 @@ qbRT::Scene::Scene()
 	handMat -> AssignTexture(handTexture);
 
 	auto eyeMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
-	eyeMat -> m_baseColor = qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}};
+	eyeMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
 	eyeMat -> m_reflectivity = 0.1;
 	eyeMat -> m_shininess = 16.0;
 	eyeMat -> AssignTexture(eyeTexture);
 
 	auto noseMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
-	noseMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 0.5, 0.0}};
+	noseMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
 	noseMat -> m_reflectivity = 0.1;
 	noseMat -> m_shininess = 16.0;
 	noseMat -> AssignTexture(noseTexture);
 
 	auto buttonMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
-	buttonMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 0.0, 0.0}};
+	buttonMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
 	buttonMat -> m_reflectivity = 0.1;
 	buttonMat -> m_shininess = 16.0;
 	buttonMat -> AssignTexture(buttonTexture);
 
 	auto floorMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
-	floorMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 0.0, 0.0}};
+	floorMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
 	floorMat -> m_reflectivity = 0.6;
 	floorMat -> m_shininess = 16.0;
 	floorMat -> AssignTexture(floorTexture2);
@@ -220,6 +226,12 @@ qbRT::Scene::Scene()
 	torusBodyMat -> m_reflectivity = 0.1;
 	torusBodyMat -> m_shininess = 16.0;;
 	torusBodyMat -> AssignTexture(torusTexture);
+
+    auto hatMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
+	hatMat -> m_baseColor = qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}};
+	hatMat -> m_reflectivity = 0.5;
+	hatMat -> m_shininess = 64.0;
+	hatMat -> AssignTexture(hatTexture);
 	
 	auto metalMat = std::make_shared<qbRT::SimpleMaterial> (qbRT::SimpleMaterial());
 	metalMat -> m_baseColor = qbVector<double>{std::vector<double>{0.3, 0.3, 0.3}};
@@ -393,10 +405,18 @@ qbRT::Scene::Scene()
 	fingerBody2 -> m_tag = "fingerBody2";
 	fingerBody2 -> m_isVisible = true;
 	fingerBody2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.8, -0.1, -1.0}},
-												qbVector<double>{std::vector<double>{0.0, M_PI/8.0, M_PI/2.0}},
-												qbVector<double>{std::vector<double>{0.03, 0.03, 0.2}}});
+												    qbVector<double>{std::vector<double>{0.0, M_PI/8.0, M_PI/2.0}},
+												    qbVector<double>{std::vector<double>{0.03, 0.03, 0.2}}});
 	fingerBody2 -> AssignMaterial(handMat);
 	fingerBody2 -> m_uvMapType = qbRT::uvCYLINDER;
+
+	auto hat = std::make_shared<qbRT::Cone> (qbRT::Cone());
+	hat -> m_tag = "hat";
+	hat -> m_isVisible = true;
+	hat -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.3, -0.1, -1.9}},
+											qbVector<double>{std::vector<double>{0.0, M_PI/7.0, 0.0}},
+											qbVector<double>{std::vector<double>{0.3, 0.3, 0.3}}});
+	hat -> AssignMaterial(hatMat);
 	
 	/*auto snowManNose = std::make_shared<qbRT::Cone> (qbRT::Cone());
 	snowManNose -> m_tag = "snowManNose";
@@ -478,6 +498,7 @@ qbRT::Scene::Scene()
 	snowman -> AddSubShape(handBody2);
 	snowman -> AddSubShape(fingerBody1);
 	snowman -> AddSubShape(fingerBody2);
+	snowman -> AddSubShape(hat);
 	snowman -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.5, -1.75, 0.0}},
 	                                       qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
 										   qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}});
