@@ -17,7 +17,6 @@ qbRT::Scene::Scene()
 	// Configure the camera.
 	// **************************************************************************************	
 	m_camera.SetPosition(	qbVector<double>{std::vector<double> {8.0, -10.0, -4.0}});
-	//m_camera.SetPosition( qbVector<double>{std::vector<double> {-3.0, -5.0, -2.0}});
 	m_camera.SetLookAt	( qbVector<double>{std::vector<double> {0.0, 0.0, 0.5}});
 	m_camera.SetUp			( qbVector<double>{std::vector<double> {0.0, 0.0, 1.0}});
 	m_camera.SetHorzSize(1.0);
@@ -445,42 +444,6 @@ qbRT::Scene::Scene()
 	snowman -> SetTransformMatrix(qbRT::GTform{qbVector<double>{std::vector<double>{1.5, -1.75, 0.0}},
 	                                       qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/5.0}},
 										   qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}});
-	
-	auto box = std::make_shared<qbRT::Box> (qbRT::Box());
-	box -> m_tag = "box";
-	box -> m_isVisible = true;
-	box -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-1.0, -2.0, 0.1}},
-											qbVector<double>{std::vector<double>{0.0, 0.0, -M_PI/6.0}},
-											qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}}}	);
-	box -> AssignMaterial(boxMat);
-	box -> m_uvMapType = qbRT::uvBOX;
-
-	auto box2 = std::make_shared<qbRT::Box> (*box);
-	box2 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.5, -1.1, 0.1}},
-										     qbVector<double>{std::vector<double>{0.0, 0.0, M_PI/3.0}},
-											 qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}}});
-
-	auto box3 = std::make_shared<qbRT::Box> (*box);
-	box3 -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{-0.75, -1.5, -0.7}},
-										     qbVector<double>{std::vector<double>{0.0, 0.0, M_PI}},
-											 qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}}});
-
-    auto ball = std::make_shared<qbRT::RM::Sphere> (qbRT::RM::Sphere());
-	ball -> m_isVisible = true;
-	ball -> SetTransformMatrix(qbRT::GTform {qbVector<double>{std::vector<double>{2.0, -1.0, -0.08}},
-											   qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-											   qbVector<double>{std::vector<double>{0.75, 0.75, 0.75}}});
-	ball -> AssignMaterial(sphereBodyMat);
-
-	auto donut = std::make_shared<qbRT::RM::Torus> (qbRT::RM::Torus());
-	donut -> m_tag = "donut";
-	donut -> m_isVisible = true;
-	donut -> SetRadii(0.7, 0.3);
-	donut -> SetTransformMatrix(qbRT::GTform {	qbVector<double>{std::vector<double>{2.0, -3.0, 0.3}},
-												qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-												qbVector<double>{std::vector<double>{0.75, 0.75, 0.75}}});
-	donut -> AssignMaterial(torusBodyMat);
-	donut -> m_uvMapType = qbRT::uvSPHERE;
 
 	// **************************************************************************************
 	// Put the objects into the scene.	
