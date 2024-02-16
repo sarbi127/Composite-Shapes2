@@ -84,7 +84,7 @@ qbRT::Scene::Scene()
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
 
 	auto buttonTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
-	buttonTexture -> LoadImage("C:/git/pic-bmp/6328060.bmp");
+	buttonTexture -> LoadImage("C:/git/pic-bmp/6318993.bmp");
 	buttonTexture-> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
 																0.0,
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
@@ -96,7 +96,7 @@ qbRT::Scene::Scene()
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
 
 	auto hatTexture = std::make_shared<qbRT::Texture::Image> (qbRT::Texture::Image());
-	hatTexture -> LoadImage("C:/git/pic-bmp/6328060.bmp");
+	hatTexture -> LoadImage("C:/git/pic-bmp/6318993.bmp");
 	hatTexture -> SetTransform(	qbVector<double>{std::vector<double>{0.0, 0.0}},
 																0.0,
 																qbVector<double>{std::vector<double>{1.0, 1.0}} );
